@@ -62,6 +62,8 @@
 * `frontend` -- parent folder for all of your frontend code
     * `dist` -- this is where the bundle outputs your compiled code
     * `elm` -- your elm project
+        * `Shared`
+            * `Generated.elm` -- this is the generated elm file from the code-generator
     * `static` -- all of your static assets needed for your frontend
         * `lib` -- your downloaded libraries
             * `scss` -- all of your stylesheets
