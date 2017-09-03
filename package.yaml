@@ -1,0 +1,86 @@
+name: servant-elm-template
+version: '0.0.0.1'
+category: Web
+author: Tyler Lentz
+maintainer: Tyler Lentz
+copyright: Tyler Lentz
+license: AllRightsReserved
+github: tlentz/servent-elm-template
+extra-source-files:
+- README.md
+
+dependencies:
+- aeson
+- base
+- bytestring
+- elm-export
+- interpolate
+- iproute
+- network-uri
+- servant
+- servant-server
+- string-conversions
+- text
+- uuid
+- wai
+
+library:
+  source-dirs: api
+  exposed-modules:
+  - Api.Types
+  - Api.Helper
+  - Api.Server
+  - Api.Example.Types
+  - Api.Example.Handler
+  dependencies:
+  - containers
+  - data-default
+  - exceptions
+  - http-api-data
+  - http-client
+  - http-types
+  - mtl
+  - network
+  - servant-client
+  - transformers
+  - pretty-simple
+  - postgresql-simple
+  - random
+
+executables:
+  app:
+    main: Main.hs
+    source-dirs: app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - cryptonite
+    - servant-elm-template
+    - wai-cors
+    - warp
+
+  code-generator:
+    main: Main.hs
+    source-dirs: code-generator
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - servant-elm-template
+    - servant-elm
+    - servant-foreign
+
+tests:
+  nfl-web-scraper-tests:
+    main: Spec.hs
+    source-dirs: test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - hspec
+    - servant-elm-template
