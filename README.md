@@ -35,7 +35,7 @@
         * generate your elm code from your haskell code using `stack exec code-generator`
         * build your elm project using `elm-make`
         * bundle your project and put it into the dist folder using `node fuse copy && node fuse`
-        * then it runs your project using `stack exec app`
+        * run your project using `stack exec app`
 
 ## Included Already
 * JQuery
