@@ -16,7 +16,7 @@
 
 ## Prerequisites
 1. Install [NodeJS v6.9+](https://nodejs.org/en/download/current/)
-2. Install [Elm v0.18](http://install.elm-lang.org/)
+2. Install [Elm v0.18](https://guide.elm-lang.org/install.html)
 3. Install [Ruby](https://www.ruby-lang.org/en/documentation/installation/)
 4. Install [Postgres](https://www.postgresql.org/)
 5. Install [Stack](https://docs.haskellstack.org/en/stable/README/)
