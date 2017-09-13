@@ -15,11 +15,11 @@
 * The code-generator generates your elm types, decoders, encoders, and api endpoints from your haskell types
 
 ## Prerequisites
-1. Install [NodeJS v6.9+](https://nodejs.org/en/download/current/)
-2. Install [Elm v0.18](https://guide.elm-lang.org/install.html)
-3. Install [Ruby](https://www.ruby-lang.org/en/documentation/installation/)
-4. Install [Postgres](https://www.postgresql.org/)
-5. Install [Stack](https://docs.haskellstack.org/en/stable/README/)
+1. Install [NodeJS v6.9+](https://nodejs.org/en/download/current/) `choco install nodejs-lts`
+2. Install [Elm v0.18](https://guide.elm-lang.org/install.html) `choco install elm-platform`
+3. Install [Ruby](https://www.ruby-lang.org/en/documentation/installation/) `choco install ruby`
+4. Install [Postgres](https://www.postgresql.org/) `choco install postgresql`
+5. Install [Stack](https://docs.haskellstack.org/en/stable/README/) `choco install haskell-stack`
 6. Run stack setup `stack setup`
 7. Install hpack `stack install hpack`
 8. Install typescript globally `npm install -g typescript`
