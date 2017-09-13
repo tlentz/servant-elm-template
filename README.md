@@ -22,11 +22,12 @@
 5. Install [Stack](https://docs.haskellstack.org/en/stable/README/) `choco install haskell-stack`
 6. Run stack setup `stack setup`
 7. Install hpack `stack install hpack`
-8. Install typescript globally `npm install -g typescript`
-9. Install fusebox globally `npm install -g fuse-box`
-10. Run `npm install`
-11. Install pg `gem install pg`
-12. Install standalone_migrations `gem install standalone_migrations`
+8. Install intero `stack install intero`
+9. Install typescript globally `npm install -g typescript`
+10. Install fusebox globally `npm install -g fuse-box`
+11. Run `npm install`
+12. Install pg `gem install pg`
+13. Install standalone_migrations `gem install standalone_migrations`
 
 ## Development
 * run `rake`
@@ -36,6 +37,21 @@
         * build your elm project using `elm-make`
         * bundle your project and put it into the dist folder using `node fuse copy && node fuse`
         * run your project using `stack exec app`
+* IDE
+   * I recommend using VS Code with the following plugins:
+      * language-haskell
+      * Vans.haskero
+      * sbrink.elm
+      * abadi199.elm-format
+      * realazy.elmx
+      * monofon.hindent-format
+      * rebornix.ruby
+      * groksrc.ruby
+      * hoovercj.ruby-linter
+      * mrmInc.vscode-scss
+      * emmanuelbeziat.vscode-great-icons
+      * joeandaverde.vscode-elm-jump
+      * siegebell.prettify-symbols-mode
 
 ## Included Already
 * JQuery
