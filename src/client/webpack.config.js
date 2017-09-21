@@ -119,6 +119,7 @@ module.exports = {
         inline: true,
         host: 'localhost',
         port: 7000,
+        hot: true,
         disableHostCheck: true,
         historyApiFallback: true,
         stats: {
