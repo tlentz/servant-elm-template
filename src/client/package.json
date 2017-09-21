@@ -48,6 +48,7 @@
     "moment": "^2.18.1",
     "node-sass": "^3.13.1",
     "path": "^0.12.7",
+    "postcss-loader": "^2.0.6",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
     "ts-loader": "^2.3.7",

@@ -55,11 +55,15 @@ module.exports = {
            exclude: /(node_modules|\.min\.|elm-stuff)/,
            use: ['babel-loader'],
         }, {
+            test: /\.ts$/,
+            exclude: /(node_modules|\.min\.|elm-stuff)/,
+            use: ['ts-loader'],
+         }, {
            test: /(\.css)$/,
            use: ['style-loader', 'css-loader']
         }, {
-           test: /(\.scss)$/,
-           use: ['style-loader', 'css-loader', 'sass-loader']
+            test: /\.sc?ss$/,
+            use: ['style-loader', 'css-loader', 'sass-loader']
         }, {
            test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
            use: ['url-loader?limit=65000&mimetype=application/font-woff&name=assets/fonts/[name].[ext]'],
@@ -79,7 +83,7 @@ module.exports = {
 
      plugins: _.compact([
         OnlyIn(DEVELOPMENT, new Webpack.HotModuleReplacementPlugin()),
-        
+
         new Webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
         }),
@@ -119,12 +123,6 @@ module.exports = {
         stats: {
           colors: true,
           chunks: false,
-        },
-        proxy: {
-          '/*': {
-            target: 'http://localhost:3000',
-            changeOrigin: true,
-          },
         },
       },
 };
