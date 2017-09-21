@@ -36,4 +36,4 @@ specs =
   ]
 
 main :: IO ()
-main = specsToDir specs "frontend/elm"
+main = specsToDir specs "../client/elm"

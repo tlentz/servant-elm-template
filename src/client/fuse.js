@@ -12,7 +12,7 @@ let fuse = FuseBox.init({
                 exports: "$"
             },
             moment: {
-                source: "../node_modules/moment/moment.js",
+                source: "./node_modules/moment/moment.js",
                 exports: "moment"
             },
             daterangepicker: {

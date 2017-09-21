@@ -1,10 +1,6 @@
-elm-stuff
-server
-dist/
-.vscode
-
 # dependencies
 node_modules/
+elm-stuff/
 .stack-work/
 .fusebox
 
@@ -13,6 +9,7 @@ coverage
 
 # production
 build
+client/dist
 
 # misc
 .DS_Store
@@ -21,5 +18,5 @@ npm-debug.log.*
 
 *.cabal
 
-frontend/static/app.js
-frontend/elm/Shared/Generated.elm
+client/static/app.js
+client/elm/Shared/Generated.elm
