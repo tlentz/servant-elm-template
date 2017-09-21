@@ -18,6 +18,7 @@ const ElmStuffPath = Path.join(__dirname, '/elm-stuff');
 const ScriptsPath = Path.join(__dirname, '/static/lib/scripts');
 const NodeModulesPath = Path.join(__dirname, '/node_modules');
 const StaticPath = Path.join(__dirname, '/static');
+const PublicPath = Path.join(__dirname, '/dist/static');
 
 const OnlyIn = (test, thing) => {
     if (test) return thing;
@@ -41,7 +42,7 @@ module.exports = {
     output: {
         filename: IfDevelopment('[name].js', '[name].[chunkhash].js'),
         path: OutputPath,
-        publicPath: StaticPath
+        publicPath: PublicPath
     },
 
     resolve: {
@@ -125,7 +126,7 @@ module.exports = {
           chunks: false,
         },
         proxy: {
-          '/*': {
+          '/servant-elm-template/*': {
             target: 'http://localhost:3000',
             changeOrigin: true,
           },
