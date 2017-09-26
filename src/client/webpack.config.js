@@ -69,7 +69,7 @@ module.exports = {
            test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
            use: ['url-loader?limit=65000&mimetype=application/font-woff&name=assets/fonts/[name].[ext]'],
         }, {
-           test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+           test: /\.(html|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
            use: 'file-loader',
         }, {
            test: /\.elm$/,
@@ -78,7 +78,7 @@ module.exports = {
               `elm-webpack-loader?debug=${ELM_DEBUG}`,
            ]),
         }],
-  
+
         noParse: /\.elm/,
      },
 
