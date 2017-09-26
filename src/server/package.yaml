@@ -6,8 +6,6 @@ maintainer: Tyler Lentz
 copyright: Tyler Lentz
 license: AllRightsReserved
 github: tlentz/servent-elm-template
-extra-source-files:
-- README.md
 
 dependencies:
 - aeson

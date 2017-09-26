@@ -13,4 +13,4 @@ server :: Server ApiWithAssets
 server = rollDice' :<|> serveStatic'
     where
         rollDice' = rollDice
-        serveStatic' = serveDirectoryFileServer "./frontend/dist/static"
+        serveStatic' = serveDirectoryFileServer "../client/dist"

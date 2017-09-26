@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "commonjs",
+    "sourceMap": true,
+    "moduleResolution": "node",
+    "preserveConstEnums": true,
+    "removeComments": true,
+    "strict": true
+  },
+  "compileOnSave": false,
+  "exclude": [
+    "node_modules",
+    ".vscode",
+    "dist/"
+  ]
+}
