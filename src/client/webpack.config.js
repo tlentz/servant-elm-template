@@ -107,8 +107,8 @@ module.exports = {
         OnlyIn(PRODUCTION, new CleanWebpackPlugin([OutputPath])),
 
         new CopyWebpackPlugin([{
-            from: StaticPath,
-            to: OutputPath
+            from: 'assets/',
+            to: 'assets/'
         }]),
 
         OnlyIn(PRODUCTION, new WepackMd5Hash()),
