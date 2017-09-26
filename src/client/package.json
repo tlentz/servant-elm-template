@@ -18,7 +18,7 @@
     "elm-test": "bin/elm-test"
   },
   "scripts": {
-    "build": "NODE_ENV=production webpack --optimize-minimize",
+    "build": "set NODE_ENV=production && webpack --optimize-minimize",
     "watch": "webpack-dev-server --hot"
   },
   "dependencies": {

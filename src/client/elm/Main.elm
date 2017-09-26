@@ -1,7 +1,5 @@
 import Html exposing (..)
 import Html.Events exposing (..)
-import Random
-import Shared.Generated exposing (Dice)
 import Types exposing (Msg(..), Model, initialModel, initialDice)
 import Rest exposing (rollDice)
 

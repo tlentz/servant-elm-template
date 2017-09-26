@@ -15,6 +15,7 @@ const Autoprefixer = require('autoprefixer');
 const _ = require('lodash');
 
 const OutputPath = Path.resolve(Path.join(__dirname, '/dist'));
+const PublicPath = '/servant-elm-template/'
 
 const OnlyIn = (test, thing) => {
     if (test) return thing;
@@ -35,6 +36,7 @@ module.exports = {
     output: {
         filename: IfDevelopment('[name].js', '[name].[chunkhash].js'),
         path: OutputPath,
+        publicPath: PublicPath
     },
 
     module: {
