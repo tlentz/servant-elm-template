@@ -28,7 +28,7 @@ module.exports = {
 
     entry: [
         'babel-polyfill',
-        `./static/index.ts`
+        `./app/index.ts`
     ],
 
     output: {
