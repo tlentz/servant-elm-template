@@ -10,15 +10,11 @@ const WepackMd5Hash = require('webpack-md5-hash');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Autoprefixer = require('autoprefixer');
 const _ = require('lodash');
 
-const OutputPath = Path.join(__dirname, '/dist');
-const ElmStuffPath = Path.join(__dirname, '/elm-stuff');
-const ScriptsPath = Path.join(__dirname, '/static/lib/scripts');
-const NodeModulesPath = Path.join(__dirname, '/node_modules');
-const StaticPath = Path.join(__dirname, '/static');
-const PublicPath = Path.join(__dirname, '/dist/static');
+const OutputPath = Path.resolve(Path.join(__dirname, '/dist'));
 
 const OnlyIn = (test, thing) => {
     if (test) return thing;
@@ -31,23 +27,14 @@ const IfDevelopment = (thing, other) => {
 module.exports = {
     devtool: IfDevelopment('eval-source-map', 'cheap-module-source-map'),
 
-    entry: {
-        main: _.compact([
-            OnlyIn(DEVELOPMENT, 'webpack-hot-middleware/client'),
-            'babel-polyfill',
-            `${StaticPath}/index.ts`
-        ])
-    },
+    entry: [
+        'babel-polyfill',
+        `./app/index.ts`
+    ],
 
     output: {
         filename: IfDevelopment('[name].js', '[name].[chunkhash].js'),
         path: OutputPath,
-        publicPath: PublicPath
-    },
-
-    resolve: {
-        modules: ['node_modules', StaticPath],
-        extensions: ['.js', '.elm', '.css', '.scss', '.ts']
     },
 
     module: {
@@ -69,7 +56,7 @@ module.exports = {
            test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
            use: ['url-loader?limit=65000&mimetype=application/font-woff&name=assets/fonts/[name].[ext]'],
         }, {
-           test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+           test: /\.(html|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
            use: 'file-loader',
         }, {
            test: /\.elm$/,
@@ -78,12 +65,11 @@ module.exports = {
               `elm-webpack-loader?debug=${ELM_DEBUG}`,
            ]),
         }],
-  
+
         noParse: /\.elm/,
      },
 
      plugins: _.compact([
-        OnlyIn(DEVELOPMENT, new Webpack.HotModuleReplacementPlugin()),
 
         new Webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
@@ -104,15 +90,29 @@ module.exports = {
         new Webpack.NoEmitOnErrorsPlugin(),
 
         // Remove build directory
-        OnlyIn(PRODUCTION, new CleanWebpackPlugin([OutputPath])),
+        OnlyIn(PRODUCTION, new CleanWebpackPlugin(['dist'])),
 
         new CopyWebpackPlugin([{
-            from: StaticPath,
-            to: OutputPath
+            from: 'assets/',
+            to: 'assets/'
         }]),
 
         OnlyIn(PRODUCTION, new WepackMd5Hash()),
 
+        new HtmlWebpackPlugin({
+            inject: false,
+            template: require('html-webpack-template'),
+
+            appMountId: 'main',
+            mobile: true,
+            lang: 'en-US',
+
+            title: 'Servant Elm Template',
+            links: [],
+            xhtml: true,
+            hash: false,
+            baseHref: '/',
+          }),
     ]),
 
     devServer: {
