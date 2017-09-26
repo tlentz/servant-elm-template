@@ -13,12 +13,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const Autoprefixer = require('autoprefixer');
 const _ = require('lodash');
 
-const OutputPath = Path.join(__dirname, '/dist');
-const ElmStuffPath = Path.join(__dirname, '/elm-stuff');
-const ScriptsPath = Path.join(__dirname, '/static/lib/scripts');
-const NodeModulesPath = Path.join(__dirname, '/node_modules');
-const StaticPath = Path.join(__dirname, '/static');
-const PublicPath = Path.join(__dirname, '/dist/static');
+const OutputPath = Path.resolve(__dirname, '/dist');
 
 const OnlyIn = (test, thing) => {
     if (test) return thing;
@@ -31,23 +26,14 @@ const IfDevelopment = (thing, other) => {
 module.exports = {
     devtool: IfDevelopment('eval-source-map', 'cheap-module-source-map'),
 
-    entry: {
-        main: _.compact([
-            OnlyIn(DEVELOPMENT, 'webpack-hot-middleware/client'),
-            'babel-polyfill',
-            `${StaticPath}/index.ts`
-        ])
-    },
+    entry: [
+        'babel-polyfill',
+        `./static/index.ts`
+    ],
 
     output: {
         filename: IfDevelopment('[name].js', '[name].[chunkhash].js'),
         path: OutputPath,
-        publicPath: PublicPath
-    },
-
-    resolve: {
-        modules: ['node_modules', StaticPath],
-        extensions: ['.js', '.elm', '.css', '.scss', '.ts']
     },
 
     module: {
@@ -83,7 +69,6 @@ module.exports = {
      },
 
      plugins: _.compact([
-        OnlyIn(DEVELOPMENT, new Webpack.HotModuleReplacementPlugin()),
 
         new Webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
