@@ -14,7 +14,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Autoprefixer = require('autoprefixer');
 const _ = require('lodash');
 
-const OutputPath = Path.resolve(__dirname, '/dist');
+const OutputPath = Path.resolve(Path.join(__dirname, '/dist'));
 
 const OnlyIn = (test, thing) => {
     if (test) return thing;
@@ -90,7 +90,7 @@ module.exports = {
         new Webpack.NoEmitOnErrorsPlugin(),
 
         // Remove build directory
-        OnlyIn(PRODUCTION, new CleanWebpackPlugin([OutputPath])),
+        OnlyIn(PRODUCTION, new CleanWebpackPlugin(['dist'])),
 
         new CopyWebpackPlugin([{
             from: 'assets/',
