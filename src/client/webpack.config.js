@@ -10,6 +10,7 @@ const WepackMd5Hash = require('webpack-md5-hash');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Autoprefixer = require('autoprefixer');
 const _ = require('lodash');
 
@@ -98,6 +99,20 @@ module.exports = {
 
         OnlyIn(PRODUCTION, new WepackMd5Hash()),
 
+        new HtmlWebpackPlugin({
+            inject: false,
+            template: require('html-webpack-template'),
+
+            appMountId: 'main',
+            mobile: true,
+            lang: 'en-US',
+
+            title: 'Servant Elm Template',
+            links: [],
+            xhtml: true,
+            hash: false,
+            baseHref: '/',
+          }),
     ]),
 
     devServer: {
