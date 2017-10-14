@@ -28,10 +28,18 @@ const IfDevelopment = (thing, other) => {
 module.exports = {
     devtool: IfDevelopment('eval-source-map', 'cheap-module-source-map'),
 
-    entry: [
-        'babel-polyfill',
-        `./app/index.ts`
-    ],
+    entry: {
+        main: [
+            'babel-polyfill',
+            'bootstrap',
+            'font-awesome-sass-loader',
+            `./app/main.ts`
+        ]
+    },
+
+    resolve: {
+        extensions: ['.ts', '.js', '.json']
+      },
 
     output: {
         filename: IfDevelopment('[name].js', '[name].[chunkhash].js'),
@@ -55,10 +63,7 @@ module.exports = {
             test: /\.sc?ss$/,
             use: ['style-loader', 'css-loader', 'sass-loader']
         }, {
-           test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-           use: ['url-loader?limit=65000&mimetype=application/font-woff&name=assets/fonts/[name].[ext]'],
-        }, {
-           test: /\.(html|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+           test: /\.(html|ttf|eot|svg|png|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
            use: 'file-loader',
         }, {
            test: /\.elm$/,
@@ -81,7 +86,9 @@ module.exports = {
             $: 'jquery',
             jQuery: 'jquery',
             'window.jQuery': 'jquery',
-            moment: 'moment'
+            moment: 'moment',
+            'Tether': 'tether',
+            Popper: 'popper.js/dist/umd/popper.js',
         }),
 
         // Outputs main.css in production
@@ -104,7 +111,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             inject: false,
             template: require('html-webpack-template'),
-
+            filename: 'index.html',
             appMountId: 'main',
             mobile: true,
             lang: 'en-US',
@@ -114,6 +121,7 @@ module.exports = {
             xhtml: true,
             hash: false,
             baseHref: '/',
+            chunks: ['main']
           }),
     ]),
 
@@ -124,6 +132,11 @@ module.exports = {
         hot: true,
         disableHostCheck: true,
         historyApiFallback: true,
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+            "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+        },
         stats: {
           colors: true,
           chunks: false,

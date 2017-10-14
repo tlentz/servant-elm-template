@@ -26,7 +26,7 @@ elmImports = [ "import Dict exposing (Dict)"
 specs :: [Spec]
 specs =
   [ 
-    Spec ["Shared", "Generated"]
+    Spec ["Generated", "ApiTypes"]
          ( defElmImports `append` (DT.intercalate "\n" elmImports)
          : toElmTypeSource (Proxy :: Proxy Dice)
          : toElmDecoderSource (Proxy :: Proxy Dice)
