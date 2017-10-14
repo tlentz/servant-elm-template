@@ -24,12 +24,13 @@
 7. Install hpack `stack install hpack`
 8. Install intero `stack install intero`
 9. Install typescript globally `npm install -g typescript`
-10. Run `npm install`
-11. Install pg `gem install pg`
-12. Install standalone_migrations `gem install standalone_migrations`
+10. Run `rake npm`
+11. Run `rake elm`
+12. Install pg `gem install pg`
+13. Install standalone_migrations `gem install standalone_migrations`
 
 ## Development
-* cd into `src` and run `rake watch`
+* run `rake watch`
     * this will build your project and enable hot reloading
 * IDE
    * I recommend using VS Code with the following plugins:
@@ -48,7 +49,7 @@
       * siegebell.prettify-symbols-mode
 
 ## Production
-* cd into `src` and run `rake build`
+* run `rake build`
     * this will build your app for production by generating your dist folder
 * then run `rake serve` to serve your production app
 
@@ -59,7 +60,6 @@
 * Tether
 
 ## Project Structure
-* `src` -- all source code goes here
-    * `client` -- all client side code
-    * `db` -- all database migrations
-    * `server` -- all server side code
+* `client` -- all client side code
+* `db` -- all database migrations
+* `server` -- all server side code
