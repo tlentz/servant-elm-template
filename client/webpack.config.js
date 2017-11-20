@@ -94,8 +94,6 @@ module.exports = {
         // Outputs main.css in production
         OnlyIn(PRODUCTION, new ExtractTextPlugin('[name].[contenthash].css')),
 
-        OnlyIn(PRODUCTION, new Webpack.optimize.UglifyJsPlugin({ sourceMap: true, compress: {warnings: true }})),
-
         new Webpack.NoEmitOnErrorsPlugin(),
 
         // Remove build directory
