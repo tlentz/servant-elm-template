@@ -11,10 +11,14 @@ dependencies:
 - aeson
 - base
 - bytestring
+- either
 - elm-export
+- envy
 - interpolate
 - iproute
 - network-uri
+- postgresql-simple
+- postgresql-simple-migration
 - servant
 - servant-server
 - string-conversions
@@ -25,6 +29,7 @@ dependencies:
 library:
   source-dirs: api
   exposed-modules:
+  - Api.Config.Types
   - Api.Types
   - Api.Helper
   - Api.Server
@@ -42,7 +47,6 @@ library:
   - servant-client
   - transformers
   - pretty-simple
-  - postgresql-simple
   - random
 
 executables:
