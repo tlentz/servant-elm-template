@@ -35,3 +35,26 @@ end
 task :elm do
   sh("cd client && elm package install --yes")
 end
+
+###############################################################################
+# DB MIGRATIONS
+###############################################################################
+task :rebuild_db_dev do
+  sh("rake db:drop RAILS_ENV=development")
+  sh("rake db:create RAILS_ENV=development")
+end
+
+task :db_create_migration do
+  prefix = Time.now.utc.strftime("%Y%m%d%H%M%S")
+  label = ENV['name']
+  filename = "#{prefix}_#{label}.sql"
+  if (filename =~ /\A([0-9]+)_([_a-z0-9]*).sql\z/)
+    outfile = "./db/#{filename}"
+    FileUtils.touch(outfile)
+    puts "created migration: #{outfile}"
+  else
+    puts "Invalid 'name' parameter: '#{label}'. Only lowercase letters, numbers, and underscores allowed."
+  end
+end
+###############################################################################
+###############################################################################
