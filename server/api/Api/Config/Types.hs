@@ -29,4 +29,4 @@ instance FromEnv EnvVars where
     envMaybe "POSTGRES_PORT" .!= 5432 <*>
     envMaybe "POSTGRES_USER" .!= "postgres" <*>
     envMaybe "POSTGRES_PASS" .!= "postgres" <*>
-    envMaybe "POSTGRES_DATABASE" .!= "example_db"
+    envMaybe "POSTGRES_DATABASE" .!= "example"
