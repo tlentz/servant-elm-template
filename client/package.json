@@ -31,6 +31,7 @@
     "node-sass": "^4.5.3"
   },
   "devDependencies": {
+    "ajv": "^6.0.0",
     "@types/clipboard": "^1.5.34",
     "@types/crypto-js": "^3.1.35",
     "autoprefixer": "^7.1.4",
