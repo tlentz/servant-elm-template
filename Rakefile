@@ -49,7 +49,7 @@ task :db_create_migration do
   label = ENV['name']
   filename = "#{prefix}_#{label}.sql"
   if (filename =~ /\A([0-9]+)_([_a-z0-9]*).sql\z/)
-    outfile = "./db/#{filename}"
+    outfile = "./db/migrate/#{filename}"
     FileUtils.touch(outfile)
     puts "created migration: #{outfile}"
   else
