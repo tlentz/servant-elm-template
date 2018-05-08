@@ -36,6 +36,18 @@ task :elm do
   sh("cd client && elm package install --yes")
 end
 
+task :clean do
+  rm_rf "server/bin/"
+  rm_rf "client/dist/"
+  rm Dir.glob("*.zip")
+  sh("cd server && stack clean")
+end
+
+task :install => :build do
+  sh("cd server && stack install --local-bin-path bin")
+  sh("docker build -t servant-elm-example .") 
+end
+
 ###############################################################################
 # DB MIGRATIONS
 ###############################################################################
