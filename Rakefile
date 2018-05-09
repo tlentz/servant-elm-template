@@ -45,8 +45,12 @@ end
 
 task :install => :build do
   sh("cd server && stack install --local-bin-path bin")
+end
+
+task :docker do
   sh("docker build -t servant-elm-example .") 
 end
+
 
 ###############################################################################
 # DB MIGRATIONS
