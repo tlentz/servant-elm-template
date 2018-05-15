@@ -3,9 +3,16 @@ RUN mkdir /opt/build
 COPY server /opt/build
 RUN cd /opt/build && stack build --system-ghc
 
+FROM ralfw/elm as elm
+RUN npm install -g typescript
+RUN mkdir -p /opt/elm
+COPY client /opt/elm
+COPY --from=build /opt
+RUN cd /opy/elm/client && npm install
+RUN cd /opt/elm/client && elm package install --yes
+
 FROM ubuntu:16.04
 RUN mkdir -p /opt/servant-elm-template
-ARG BINARY_PATH
 WORKDIR /opt/servant-elm-template
 Run cd /opt && ls
 
