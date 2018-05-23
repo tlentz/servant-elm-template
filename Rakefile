@@ -47,14 +47,21 @@ task :install => :build do
   sh("cd server && stack --docker install --local-bin-path bin")
 end
 
-task :docker do
+task :dockerBuild do
+  sh("docker build -t servant-elm-example .")
+end
 
+task :dockerInit do
   containerID = `docker images -q servant-elm-example`
   if containerID == ""
-    sh("docker build -t servant-elm-example .")
+    Rake::Task["dockerBuild"].execute
   else
     puts "using container ID: #{containerID}"
   end
+end
+
+
+task :docker => :dockerInit do
   buildPath = Dir.pwd + "/server"
   migratePath = Dir.pwd + "/db/migrate"
   clientPath = Dir.pwd + "/client"
@@ -66,14 +73,7 @@ task :docker do
     ) 
 end
 
-task :docker do
-  containerID = `docker images -q servant-elm-example`
-  if containerID == ""
-    sh("docker build -t servant-elm-example .")
-  else
-    puts "using container ID: #{containerID}"
-  end
-end
+
 
 ###############################################################################
 # DB MIGRATIONS
