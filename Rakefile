@@ -60,10 +60,19 @@ task :docker do
   clientPath = Dir.pwd + "/client"
   sh("docker run -it " +
       "--mount type=bind,source=#{buildPath},target=/opt/build " +
-      "--mount src=`#{migratePath}`,target=`/opt/db/migrate`,type=volume " +
-      "--mount src=`#{clientPath}`,target=`/opt/client`,type=volume " +
+      "--mount type=bind,src=#{migratePath},target=/opt/db/migrate " +
+      "--mount type=bind,src=#{clientPath},target=/opt/client " +
       "servant-elm-example"
     ) 
+end
+
+task :docker do
+  containerID = `docker images -q servant-elm-example`
+  if containerID == ""
+    sh("docker build -t servant-elm-example .")
+  else
+    puts "using container ID: #{containerID}"
+  end
 end
 
 ###############################################################################
