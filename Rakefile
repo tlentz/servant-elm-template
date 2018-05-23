@@ -60,16 +60,11 @@ task :dockerInit do
   end
 end
 
-
 task :docker => :dockerInit do
-  buildPath = Dir.pwd + "/server"
-  migratePath = Dir.pwd + "/db/migrate"
-  clientPath = Dir.pwd + "/client"
   sh("docker run -it " +
-      "--mount type=bind,source=#{buildPath},target=/opt/build " +
-      "--mount type=bind,src=#{migratePath},target=/opt/db/migrate " +
-      "--mount type=bind,src=#{clientPath},target=/opt/client " +
-      "servant-elm-example"
+      "--mount type=bind,source=#{Dir.pwd},target=/var/app " +
+      "-p 7000:7000 " + 
+      "servant-elm-example cd client && npm run watch"
     ) 
 end
 
