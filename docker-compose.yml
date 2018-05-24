@@ -1,0 +1,13 @@
+version: '3'
+services:
+  builder:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+     - .:/var/app
+    ports:
+     - "8000:8000"
+     - "7000:7000"
+  postgres:
+    image: "postgres"
