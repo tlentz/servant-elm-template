@@ -8,11 +8,11 @@ task :build => [:build_backend, :elm_api_code_generator, :build_frontend]
 multitask :serve_webpack_hot_reload => [:serve, :webpack_hot_reload]
 
 task :build_backend do
-  sh("cd server && stack --docker build")
+  sh("cd server && stack build")
 end
 
 task :serve do
-  sh("cd server && stack --docker exec app")
+  sh("cd server && stack exec app")
 end
 
 task :webpack_hot_reload do
@@ -25,7 +25,7 @@ end
 
 task :elm_api_code_generator do
   mkdir_p "client/elm/Generated/"
-  sh("cd server && stack --docker exec code-generator")
+  sh("cd server && stack exec code-generator")
 end
 
 task :npm do
@@ -40,11 +40,11 @@ task :clean do
   rm_rf "server/bin/"
   rm_rf "client/dist/"
   rm Dir.glob("*.zip")
-  sh("cd server && stack --docker clean")
+  sh("cd server && stack clean")
 end
 
 task :install => :build do
-  sh("cd server && stack --docker install --local-bin-path bin")
+  sh("cd server && stack install --local-bin-path bin")
 end
 
 task :dockerBuild do
@@ -64,11 +64,10 @@ task :docker => :dockerInit do
   sh("docker run -it " +
       "--mount type=bind,source=#{Dir.pwd},target=/var/app " +
       "-p 7000:7000 " + 
-      "servant-elm-example cd client && npm run watch"
+      "-p 8000:8000 " + 
+      "servant-elm-example"
     ) 
 end
-
-
 
 ###############################################################################
 # DB MIGRATIONS
