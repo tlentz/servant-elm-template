@@ -65,10 +65,18 @@ task :docker => :dockerInit do
       "--mount type=bind,source=#{Dir.pwd},target=/var/app " +
       "-p 7000:7000 " + 
       "-p 8000:8000 " + 
+      "--name servant_elm_template_builder " +
       "servant-elm-example"
-    ) 
+    )
 end
 
+task :dockerRun => :dockerInit do
+  sh( "docker exec -d servant_elm_template_builder " +
+      "cd /var/app/server && stack exec app " +
+      "&& cd /var/app/client && npm run watch"
+    )
+end
+  
 ###############################################################################
 # DB MIGRATIONS
 ###############################################################################
