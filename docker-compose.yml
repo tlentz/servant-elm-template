@@ -1,5 +1,11 @@
 version: '3'
 services:
+  postgres:
+    image: "postgres"
+    ports:
+     - "5432:5432"
+    networks:
+      - default
   builder:
     build: 
       context: .
@@ -9,5 +15,11 @@ services:
     ports:
      - "8000:8000"
      - "7000:7000"
-  postgres:
-    image: "postgres"
+    environment:
+     - POSTGRES_HOST=postgres
+    networks:
+     - default
+    links:
+     - postgres
+    stdin_open: true
+    tty: true
