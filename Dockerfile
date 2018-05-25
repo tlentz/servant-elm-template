@@ -1,30 +1,32 @@
+############################################################
+###Step 1
+############################################################
 FROM fpco/stack-build:lts-11.0 as build
-RUN mkdir /opt/build
-COPY server /opt/build
-RUN cd /opt/build && stack build --system-ghc
+# FROM haskell:latest as build
 
-FROM ralfw/elm as elm
+RUN apt-get update
+
+RUN npm cache clean -f
+RUN npm install -g n
+RUN n 9
+RUN npm install -g npm
+RUN npm install -g elm@0.18.0 -unsafe-perm=true --allow-root
+RUN npm install -g elm-test@0.18.0
 RUN npm install -g typescript
-RUN mkdir -p /opt/elm
-COPY client /opt/elm
-COPY --from=build /opt
-RUN cd /opy/elm/client && npm install
-RUN cd /opt/elm/client && elm package install --yes
+RUN npm install -g --save-dev webpack
+RUN npm install -g webpack-dev-server
 
-FROM ubuntu:16.04
-RUN mkdir -p /opt/servant-elm-template
-WORKDIR /opt/servant-elm-template
-Run cd /opt && ls
+RUN stack setup
+RUN stack install hpack
+RUN stack install intero
 
-Expose 7000
 
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends libpq5 libgmp10 ca-certificates netbase && \
-    apt-get clean
+COPY . /var/app
 
-COPY --from=build /opt/build/.stack-work/install/x86_64-linux/lts-9.0/8.0.2/bin .
-COPY client/dist/ client/dist/
-COPY db/migrate/ db/migrate/
-Run cd /opt/servant-elm-template && ls
+RUN cd /var/app/server && stack install --local-bin-path bin
+RUN cd /var/app/server && stack build --system-ghc
+RUN cd /var/app/server && stack exec code-generator
+RUN cd /var/app/client && npm install && elm package install --yes && elm make
 
-CMD ["/opt/servant-elm-template/app"]
+ENTRYPOINT cd /etc && echo "$(tail -n +2 hosts)" > hosts2 && echo -e $'\r\n0.0.0.0 localhost' >> hosts2 && echo "$(cat hosts2)" > hosts && cd /var/app && /bin/bash
+WORKDIR /var/app
