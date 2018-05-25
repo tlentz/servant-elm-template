@@ -66,14 +66,14 @@ task :docker => :dockerInit do
       "-p 7000:7000 " + 
       "-p 8000:8000 " + 
       "--name servant_elm_template_builder " +
-      "servant-elm-example"
+      "servant-elm-templae_builder"
     )
 end
 
-task :dockerRun => :dockerInit do
-  sh( "docker exec -d servant_elm_template_builder " +
-      "cd /var/app/server && stack exec app " +
-      "&& cd /var/app/client && npm run watch"
+task :dockerRun  do
+  sh( " docker exec -it servant-elm-template_builder_1  bash -c " + 
+      "\"cd server && stack exec app " + 
+      "&& cd /var/app/client && npm run watch\""
     )
 end
   
