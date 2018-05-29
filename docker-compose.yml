@@ -6,9 +6,26 @@ services:
      - "5432:5432"
     networks:
       - default
-  builder:
+  stack_builder:
     build: 
-      context: .
+      context: ./server
+      dockerfile: Dockerfile
+    volumes:
+     - .:/var/app
+    ports:
+     - "8000:8000"
+     - "7000:7000"
+    environment:
+     - POSTGRES_HOST=postgres
+    networks:
+     - default
+    links:
+     - postgres
+    stdin_open: true
+    tty: true
+  npm_builder:
+    build: 
+      context: ./client
       dockerfile: Dockerfile
     volumes:
      - .:/var/app
