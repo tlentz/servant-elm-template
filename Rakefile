@@ -48,31 +48,23 @@ task :install => :build do
 end
 
 task :dockerBuild do
-  sh("docker build -t servant-elm-example .")
+  sh("docker-compose build")
 end
 
 task :dockerInit do
-  containerID = `docker images -q servant-elm-example`
-  if containerID == ""
+  imageID = `docker images -q servant-elm-template_builder`
+  if imageID == ""
     Rake::Task["dockerBuild"].execute
   else
-    puts "using container ID: #{containerID}"
+    puts "Using container ID: #{imageID}. Any changes to dockerfile will not be applied. " +
+      "To apply changes use rake dokcerBuild."
   end
-end
-
-task :docker => :dockerInit do
-  sh("docker run -it " +
-      "--mount type=bind,source=#{Dir.pwd},target=/var/app " +
-      "-p 7000:7000 " + 
-      "-p 8000:8000 " + 
-      "--name servant_elm_template_builder " +
-      "servant-elm-templae_builder"
-    )
+  sh("docker-compose up")
 end
 
 task :dockerRun  do
   sh( " docker exec -it servant-elm-template_builder_1  bash -c " + 
-      "\"cd server && stack exec app &" + 
+      "\"cd server && stack exec app & " + 
       "cd /var/app/client && npm run watch\""
     )
 end
