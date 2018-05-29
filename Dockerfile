@@ -15,6 +15,7 @@ RUN npm install -g elm-test@0.18.0
 RUN npm install -g typescript
 RUN npm install -g --save-dev webpack
 RUN npm install -g webpack-dev-server
+RUN npm install -g -D webpack-cli
 
 RUN stack setup
 RUN stack install hpack
