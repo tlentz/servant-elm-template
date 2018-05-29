@@ -57,9 +57,9 @@ task :dockerInit do
     Rake::Task["dockerBuild"].execute
   else
     puts "Using container ID: #{imageID}. Any changes to dockerfile will not be applied. " +
-      "To apply changes use rake dokcerBuild."
+      "To apply changes use rake dockerBuild."
   end
-  sh("docker-compose up")
+  sh("docker-compose up -d")
 end
 
 task :dockerRun  do
