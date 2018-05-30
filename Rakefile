@@ -74,7 +74,12 @@ task :docker_build_server do
   sh("docker-compose up -d --no-deps --build stack_builder")
 end  
 
-task :init => :rebuild_db_dev => :docker_stack_install => :docker_npm_install do
+task :docker_code_generator do
+  sh( "docker exec -d servant-elm-template_stack_builder_1 bash -c " + 
+      "\"cd server && stack exec code-generator\""
+    )
+
+task :docker_init => :rebuild_db_dev => :docker_stack_install => :docker_code_generator => :docker_npm_install do
   imageID = `docker images -q servant-elm-template_npm_builder`
   if imageID == ""
     Rake::Task["docker_build"].execute
