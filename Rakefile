@@ -60,22 +60,23 @@ task :dockerBuildServer do
 end
 
 task :dockerInit do
-  imageID = `docker images -q servant-elm-template_builder`
+  imageID = `docker images -q servant-elm-template_npm_builder`
   if imageID == ""
     Rake::Task["dockerBuild"].execute
   else
     puts "Using container ID: #{imageID}. Any changes to dockerfiles will not be applied. " +
       "To apply changes use rake dockerBuild."
   end
+  Rake::Task["rebuild_db_dev"].execute
   sh("docker-compose up -d")
 end
 
 task :dockerWatch  do
+  sh( "docker exec -d servant-elm-template_stack_builder_1 bash -c " +
+    "\"cd server && stack exec app\""
+    )
   sh( "docker exec servant-elm-template_npm_builder_1  bash -c " + 
       "\"cd /var/app/client && npm run watch &\""
-    )
-  sh( "docker exec servant-elm-template_stack_builder_1 bash -c " +
-    "\"cd server && stack exec app &\""
     )
 end
 
