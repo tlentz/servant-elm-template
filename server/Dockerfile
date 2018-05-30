@@ -17,4 +17,4 @@ RUN cd /var/app/server && stack build --system-ghc
 RUN cd /var/app/server && stack exec code-generator
 
 ENTRYPOINT cd /etc && echo "$(tail -n +2 hosts)" > hosts2 && echo -e $'\r\n0.0.0.0 localhost' >> hosts2 && echo "$(cat hosts2)" > hosts && rm -f hosts2 && cd /var/app && /bin/bash
-WORKDIR /var/app
+WORKDIR /var/app/server
