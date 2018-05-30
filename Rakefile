@@ -46,19 +46,20 @@ task :install => :build do
   sh("cd server && stack install --local-bin-path bin")
 end
 
-task :stack_install do
-  sh( "docker exec -d servant-elm-template_stack_builder_1  bash -c " +
-      "\"stack install\""
-    )
-end
-
 ###############################################################################
 # Docker
 ###############################################################################
 
 task :docker_npm_install do
   sh( "docker exec -d servant-elm-template_npm_builder_1  bash -c " +
-      "\"npm install\""
+      "\"npm install && \"" +
+      "\"npm install -g webpack@3.12.0"
+    )
+end
+
+task :docker_stack_install do
+  sh( "docker exec -d servant-elm-template_stack_builder_1  bash -c " +
+      "\"cd server && stack install\""
     )
 end
 
@@ -78,8 +79,9 @@ task :docker_code_generator do
   sh( "docker exec -d servant-elm-template_stack_builder_1 bash -c " + 
       "\"cd server && stack exec code-generator\""
     )
+end
 
-task :docker_init => :rebuild_db_dev => :docker_stack_install => :docker_code_generator => :docker_npm_install do
+task :docker_compose do
   imageID = `docker images -q servant-elm-template_npm_builder`
   if imageID == ""
     Rake::Task["docker_build"].execute
@@ -89,6 +91,8 @@ task :docker_init => :rebuild_db_dev => :docker_stack_install => :docker_code_ge
   end
   sh("docker-compose up -d")
 end
+
+task :docker_init => [:docker_compose, :rebuild_db_dev, :docker_stack_install, :docker_code_generator, :docker_npm_install]
 
 task :docker_watch  do
   sh( "docker exec -d servant-elm-template_stack_builder_1 bash -c " +
