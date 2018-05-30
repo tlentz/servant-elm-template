@@ -51,22 +51,38 @@ task :dockerBuild do
   sh("docker-compose build")
 end
 
+task :dockerBuildClient do
+  sh("docker-compose up -d --no-deps --build npm_builder")
+end
+
+task :dockerBuildServer do
+  sh("docker-compose up -d --no-deps --build stack_builder")
+end
+
 task :dockerInit do
   imageID = `docker images -q servant-elm-template_builder`
   if imageID == ""
     Rake::Task["dockerBuild"].execute
   else
-    puts "Using container ID: #{imageID}. Any changes to dockerfile will not be applied. " +
+    puts "Using container ID: #{imageID}. Any changes to dockerfiles will not be applied. " +
       "To apply changes use rake dockerBuild."
   end
   sh("docker-compose up -d")
 end
 
-task :dockerRun  do
-  sh( " docker exec -it servant-elm-template_builder_1  bash -c " + 
-      "\"cd server && stack exec app & " + 
-      "cd /var/app/client && npm run watch\""
+task :dockerWatch  do
+  sh( "docker exec servant-elm-template_npm_builder_1  bash -c " + 
+      "\"cd /var/app/client && npm run watch &\""
     )
+  sh( "docker exec servant-elm-template_stack_builder_1 bash -c " +
+    "\"cd server && stack exec app &\""
+    )
+end
+
+task :dockerClean do
+  sh ( "docker exec servant-elm-template_npm_builder_1  bash -c " +
+       "rm -rf node_modules && npm cache clear --force"
+     )
 end
   
 ###############################################################################
