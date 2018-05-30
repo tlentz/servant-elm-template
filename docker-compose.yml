@@ -13,8 +13,7 @@ services:
     volumes:
      - .:/var/app
     ports:
-     - "8000:8000"
-     - "7000:7000"
+     - "3000:3000"
     environment:
      - POSTGRES_HOST=postgres
     networks:
@@ -37,6 +36,6 @@ services:
     networks:
      - default
     links:
-     - postgres
+     - stack_builder
     stdin_open: true
     tty: true
