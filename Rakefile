@@ -47,6 +47,18 @@ task :install => :build do
   sh("cd server && stack install --local-bin-path bin")
 end
 
+task :dockerStackInstall do
+  sh( "docker exec -d servant-elm-template_stack_builder_1  bash -c " +
+      "\"stack install\""
+    )
+end
+
+task :dockerNpmInstall do
+  sh( "docker exec -d servant-elm-template_npm_builder_1  bash -c " +
+      "\"npm install\""
+    )
+end
+
 task :dockerBuild do
   sh("docker-compose build")
 end
@@ -67,8 +79,10 @@ task :dockerInit do
     puts "Using container ID: #{imageID}. Any changes to dockerfiles will not be applied. " +
       "To apply changes use rake dockerBuild."
   end
-  Rake::Task["rebuild_db_dev"].execute
   sh("docker-compose up -d")
+  Rake::Task["rebuild_db_dev"].execute
+  Rake::Task["dockerStackInstall"].execute
+  Rake::Task["dockerNpmInstall"].execute
 end
 
 task :dockerWatch  do

@@ -17,6 +17,7 @@ COPY . /var/app
 
 WORKDIR /var/app/client
 RUN npm install
+RUN npm install -g webpack-dev-server
 RUN npm install -g elm@0.18.0 -unsafe-perm=true --allow-root
 RUN npm install -g elm-test@0.18.0
 RUN elm package install --yes 
