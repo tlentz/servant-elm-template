@@ -40,52 +40,52 @@ task :clean do
   rm_rf "server/bin/"
   rm_rf "client/dist/"
   rm Dir.glob("*.zip")
-  sh("cd server && stack clean")
 end
 
 task :install => :build do
   sh("cd server && stack install --local-bin-path bin")
 end
 
-task :dockerStackInstall do
+task :stack_install do
   sh( "docker exec -d servant-elm-template_stack_builder_1  bash -c " +
       "\"stack install\""
     )
 end
 
-task :dockerNpmInstall do
+###############################################################################
+# Docker
+###############################################################################
+
+task :docker_npm_install do
   sh( "docker exec -d servant-elm-template_npm_builder_1  bash -c " +
       "\"npm install\""
     )
 end
 
-task :dockerBuild do
+task :docker_build do
   sh("docker-compose build")
 end
 
-task :dockerBuildClient do
+task :docker_build_client do
   sh("docker-compose up -d --no-deps --build npm_builder")
 end
 
-task :dockerBuildServer do
+task :docker_build_server do
   sh("docker-compose up -d --no-deps --build stack_builder")
-end
+end  
 
-task :dockerInit do
+task :init => :rebuild_db_dev => :docker_stack_install => :docker_npm_install do
   imageID = `docker images -q servant-elm-template_npm_builder`
   if imageID == ""
-    Rake::Task["dockerBuild"].execute
+    Rake::Task["docker_build"].execute
   else
     puts "Using container ID: #{imageID}. Any changes to dockerfiles will not be applied. " +
-      "To apply changes use rake dockerBuild."
+      "To apply changes use rake docker_build."
   end
   sh("docker-compose up -d")
-  Rake::Task["rebuild_db_dev"].execute
-  Rake::Task["dockerStackInstall"].execute
-  Rake::Task["dockerNpmInstall"].execute
 end
 
-task :dockerWatch  do
+task :docker_watch  do
   sh( "docker exec -d servant-elm-template_stack_builder_1 bash -c " +
     "\"cd server && stack exec app\""
     )
@@ -94,7 +94,7 @@ task :dockerWatch  do
     )
 end
 
-task :dockerClean do
+task :docker_clean => :clean do
   sh ( "docker exec servant-elm-template_npm_builder_1  bash -c " +
        "rm -rf node_modules && npm cache clear --force"
      )
