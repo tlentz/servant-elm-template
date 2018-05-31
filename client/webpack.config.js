@@ -123,6 +123,11 @@ module.exports = {
           }),
     ]),
 
+    watchOptions: {
+        aggregateTimeout: 300,
+        poll: 1000
+    },
+
     devServer: {
         inline: true,
         host: 'localhost',
@@ -141,7 +146,7 @@ module.exports = {
         },
         proxy: {
           '/servant-elm-template/*': {
-            target: 'http://localhost:3000',
+            target: 'http://stack_builder:3000',
             changeOrigin: true,
           },
         },
