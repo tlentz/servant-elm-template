@@ -1,7 +1,7 @@
 ############################################################
 ###Step 1
 ############################################################
-FROM haskell:latest as build
+FROM fpco/stack-build:lts-11.0 as build
 
 
 RUN stack setup
