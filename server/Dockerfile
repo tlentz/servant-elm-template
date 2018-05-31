@@ -1,8 +1,7 @@
 ############################################################
 ###Step 1
 ############################################################
-FROM fpco/stack-build:lts-11.0 as build
-# FROM haskell:latest as build
+FROM haskell:latest as build
 
 
 RUN stack setup
@@ -10,7 +9,7 @@ RUN stack install hpack
 RUN stack install intero
 
 
-COPY . /var/app
+COPY . /var/app/server
 
 RUN cd /var/app/server && stack build --system-ghc
 
