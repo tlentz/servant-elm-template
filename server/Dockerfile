@@ -2,8 +2,6 @@
 ###Step 1
 ############################################################
 FROM fpco/stack-build:lts-11.0 as build
-# FROM haskell:latest as build
-
 
 RUN stack setup
 RUN stack install hpack
